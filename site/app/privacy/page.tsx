@@ -76,8 +76,8 @@ export default function PrivacyPage() {
         <h2 className="break-keep text-xl leading-8">お問い合わせ窓口</h2>
         <p className="break-keep text-base leading-8 text-ink-soft">
           開示、訂正、利用停止、削除の請求は、登録したメールアドレスから次の宛先へ送ってください。アカウント削除の手順は
-          <Link href="/support" className="break-keep text-rose underline-offset-4 hover:underline">
-            サポートページ
+          <Link href="/account-deletion" className="break-keep text-rose underline-offset-4 hover:underline">
+            アカウントの削除
           </Link>
           に記載しています。
         </p>

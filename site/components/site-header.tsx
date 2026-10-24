@@ -3,6 +3,7 @@ import Link from "next/link";
 const links = [
   { href: "/", label: "トップ" },
   { href: "/privacy", label: "プライバシーポリシー" },
+  { href: "/account-deletion", label: "アカウント削除" },
   { href: "/support", label: "サポート" },
 ] as const;
 

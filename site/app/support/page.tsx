@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 
 export const metadata: Metadata = {
   title: "サポート",
@@ -71,7 +72,11 @@ export default function SupportPage() {
       <section className="mt-12 flex flex-col gap-4">
         <h2 className="break-keep text-xl leading-8">アカウント削除の申請</h2>
         <p className="break-keep text-base leading-8 text-ink-soft">
-          プロフィールの「アカウントを削除（退会）」から申請できます。アプリを開けない場合は、件名を「アカウント削除申請」にして、登録メールアドレスを本文に書き、同じ宛先へ送ってください。申請から30日以内に、アカウントとお気に入りなどの個人データを削除します。
+          手順、削除するデータ、残すデータは
+          <Link href="/account-deletion" className="break-keep text-rose underline-offset-4 hover:underline">
+            アカウントの削除
+          </Link>
+          にまとめています。アプリを開けない場合は、件名を「アカウント削除申請」にして、登録メールアドレスを本文に書き、同じ宛先へ送ってください。申請から30日以内に、アカウントとお気に入りなどの個人データを削除します。
         </p>
         <a
           href="mailto:support@wanthis-apps.com?subject=%E3%82%A2%E3%82%AB%E3%82%A6%E3%83%B3%E3%83%88%E5%89%8A%E9%99%A4%E7%94%B3%E8%AB%8B"
