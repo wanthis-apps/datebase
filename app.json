@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "DateSpot",
+    "name": "デートベース",
     "slug": "DateSpot-app",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -8,7 +8,8 @@
     "userInterfaceStyle": "light",
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.yourcompany.datespot",
+      "bundleIdentifier": "com.wanthis.datebase",
+      "buildNumber": "1",
       "infoPlist": {
         "ITSAppUsesNonExemptEncryption": false
       }
@@ -26,7 +27,8 @@
           "apiKey": "AIzaSyCXsEx-EP1t99Q3k-c6FUbKw0GeJXclbCg"
         }
       },
-      "package": "com.yourcompany.datespot",
+      "package": "com.wanthis.datebase",
+      "versionCode": 1,
       "permissions": [
         "ACCESS_COARSE_LOCATION",
         "ACCESS_FINE_LOCATION"
@@ -62,6 +64,8 @@
       ]
     ],
     "extra": {
+      "privacyPolicyUrl": "https://datespot.wanthis-apps.com/privacy",
+      "termsOfServiceUrl": "https://datespot.wanthis-apps.com/privacy",
       "eas": {
         "projectId": "787781a1-0274-4da4-a8cd-db198d2c4c2f"
       }

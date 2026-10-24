@@ -1,0 +1,17 @@
+
+<svg width="800" height="200" viewBox="0 0 800 200" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="brandGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#E45C2A" />
+      <stop offset="100%" stop-color="#FF7A45" />
+    </linearGradient>
+  </defs>
+
+  <!-- インフィニティW シンボル -->
+  <g transform="translate(40, 30)">
+    <path d="M 20,40 C 40,10 70,10 90,50 C 110,90 130,130 150,130 C 170,130 190,90 200,70 L 180,50 C 170,70 155,100 145,100 C 135,100 120,70 100,30 C 75,-10 35,-10 10,30 C -10,70 10,120 40,130 C 65,140 85,120 100,90 L 120,110 C 100,140 75,160 40,150 C -5,140 -30,80 0,30 Z" fill="url(#brandGrad)" />
+  </g>
+
+  <!-- WANTHIS テキスト。76px に対する letter-spacing 6 は約 +8% -->
+  <text x="260" y="125" font-family="Montserrat, 'Helvetica Neue', Arial, sans-serif" font-size="76" font-weight="700" letter-spacing="6" fill="#1A1A1A">WANTHIS</text>
+</svg>
