@@ -35,13 +35,10 @@ export default function AccountDeletionPage() {
         <p className="break-keep text-base leading-8 text-ink-soft">
           アカウントを持っている人は、アプリ内から自分で削除できます。
         </p>
-        <ol className="flex flex-col gap-4">
-          {steps.map((step, index) => (
-            <li key={step} className="rounded-2xl border border-line bg-surface p-5">
-              <p className="break-keep text-sm leading-7 text-ink-soft">
-                <span className="text-base text-foreground">{index + 1}. </span>
-                {step}
-              </p>
+        <ol className="flex list-decimal flex-col gap-4 pl-5">
+          {steps.map((step) => (
+            <li key={step} className="break-keep rounded-2xl border border-line bg-surface p-5 text-sm leading-7 text-ink-soft">
+              {step}
             </li>
           ))}
         </ol>
