@@ -4,12 +4,25 @@
 -- 写真は Unsplash の参考画像で、各店の公式写真ではない。
 -- 再実行すると spots / coupons / それに紐づくお気に入り・口コミ・プラン明細を消して入れ直す。
 
-delete from public.user_coupons_history;
-delete from public.coupons;
-delete from public.plan_spots;
-delete from public.reviews;
-delete from public.favorites;
-delete from public.spots;
+-- 本番に無いテーブル（plan_spots など）は飛ばす。
+do $$
+declare
+  target text;
+begin
+  foreach target in array array[
+    'user_coupons_history',
+    'coupons',
+    'plan_spots',
+    'reviews',
+    'favorites',
+    'spots'
+  ]
+  loop
+    if to_regclass('public.' || target) is not null then
+      execute format('delete from public.%I', target);
+    end if;
+  end loop;
+end $$;
 
 insert into public.spots (
   id,
