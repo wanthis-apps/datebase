@@ -5,11 +5,12 @@ Read the exact versioned docs at https://docs.expo.dev/versions/v57.0.0/ before 
 ## 現在の作業コンテキスト
 
 *   **直近のネクストアクション**:
-    1. **Play Console 審査提出（承認待ち）**:
-        * 本人確認の承認を待ち、「アプリを作成」のロック解除を確認する（待機中）。
-        * 解除後、Play Console上で `DateSpot` アプリ枠を作成する。
-        * ストア掲載情報（`docs/store-metadata.md`）、アセット画像、`.aab`（v3）をアップロードして審査へ提出する。
-        * 「アプリへのアクセス」と「データセーフティ」は `docs/store-metadata.md` の記載に沿って記入する。
+    1. **外部アカウント側の公開準備**:
+        * GitHub リポジトリ `wanthis-apps/datespot-lp` を `datebase` に改名する。ローカルフォルダ `DateSpot-app` も、Cursor を閉じたあと `datebase` に改名する。
+        * Supabase の SQL Editor で `supabase/migrations/20261102140000_delete_own_account.sql` を実行する。
+        * Google Cloud で Maps の API キーを制限し、`GOOGLE_MAPS_API_KEY` を EAS の環境変数に登録する。キーは `app.json` から外した。
+        * 公開サイトのカスタムドメインは、まだ `datespot.wanthis-apps.com`。Vercel で配信を確認し、必要なら `datebase.wanthis-apps.com` を追加する。
+        * Play Console の本人確認後、アプリ名「デートベース」で枠を作り、`docs/store-metadata.md` に沿って提出する。スクリーンショットは本番画面の撮り直しが残っている。
 
 *   **完了済み**:
     1. **WANTHISブランドロゴの本番データ化 [完了]**:

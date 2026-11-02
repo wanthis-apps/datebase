@@ -20,11 +20,11 @@ const display = Cormorant_Garamond({
 
 export const metadata: Metadata = {
   title: {
-    default: "WANTHIS | DateSpot",
+    default: "WANTHIS | デートベース",
     template: "%s | WANTHIS",
   },
   description:
-    "WANTHIS の第1弾アプリ DateSpot。デートスポットの探し方、プライバシーポリシー、サポート窓口を掲載しています。",
+    "WANTHIS の第1弾アプリ デートベース。デートスポットの探し方、プライバシーポリシー、サポート窓口を掲載しています。",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {

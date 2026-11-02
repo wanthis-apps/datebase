@@ -1,8 +1,9 @@
 import { Platform, Share } from 'react-native';
+import { APP_NAME, PUBLIC_SITE_ORIGIN } from '@/constants/publicSite';
 import type { Plan, Spot } from '../../types/database';
 
-export const SHARE_WEB_ORIGIN = 'https://datespot.app';
-export const SHARE_DEEP_LINK_SCHEME = 'datespot';
+export const SHARE_WEB_ORIGIN = PUBLIC_SITE_ORIGIN;
+export const SHARE_DEEP_LINK_SCHEME = 'datebase';
 
 export type SharePayload = {
   title: string;
@@ -20,7 +21,7 @@ export function buildSpotShareLinks(spotId: string): {
   deepLink: string;
 } {
   return {
-    webUrl: `${SHARE_WEB_ORIGIN}/spots/${spotId}`,
+    webUrl: SHARE_WEB_ORIGIN,
     deepLink: `${SHARE_DEEP_LINK_SCHEME}://spot/${spotId}`,
   };
 }
@@ -30,7 +31,7 @@ export function buildPlanShareLinks(planId: string): {
   deepLink: string;
 } {
   return {
-    webUrl: `${SHARE_WEB_ORIGIN}/plans/${planId}`,
+    webUrl: SHARE_WEB_ORIGIN,
     deepLink: `${SHARE_DEEP_LINK_SCHEME}://plan/${planId}`,
   };
 }
@@ -69,10 +70,10 @@ export async function shareContent(
 export async function shareSpot(spot: Spot): Promise<ShareResult> {
   const { webUrl, deepLink } = buildSpotShareLinks(spot.id);
   const description =
-    spot.description ?? 'DateSpotで見つけたデートスポットです。';
+    spot.description ?? `${APP_NAME}で見つけたデートスポットです。`;
 
   return shareContent({
-    title: `${spot.name} | DateSpot`,
+    title: `${spot.name} | ${APP_NAME}`,
     message: `${spot.name}\n${description}\n${deepLink}`,
     url: webUrl,
   });
@@ -87,10 +88,10 @@ export async function sharePlan(plan: Plan): Promise<ShareResult> {
     spotNames.length > 0
       ? `コース: ${spotNames.join(' → ')}`
       : `${plan.plan_spots.length}スポットのデートコース`;
-  const description = plan.description ?? 'DateSpotで作ったデートプランです。';
+  const description = plan.description ?? `${APP_NAME}で作ったデートプランです。`;
 
   return shareContent({
-    title: `${plan.title} | DateSpot`,
+    title: `${plan.title} | ${APP_NAME}`,
     message: `${plan.title}\n${description}\n${course}\n${deepLink}`,
     url: webUrl,
   });

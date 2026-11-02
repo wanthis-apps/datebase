@@ -37,9 +37,9 @@ export const ja = {
     slide1Title: 'ぴったりのデートスポットが見つかる',
     slide1Body:
       'マップとこだわり条件で、\n今のふたりに合うカフェ・夜景・\nおでかけ先を探せます。',
-    slide2Title: 'お得なクーポンでおでかけ',
+    slide2Title: '提携クーポンがあるときは記録できる',
     slide2Body:
-      '対象店舗の限定クーポンを使って、\nいつもより少し特別なデートに。',
+      '提携店のクーポンが掲載されているとき、\n利用した記録をアカウントに残せます。',
     slide3Title: 'ふたりだけのデートプランを作成',
     slide3Body:
       '気になるスポットを組み合わせて、\nオリジナルのコースとして保存できます。',
@@ -63,7 +63,7 @@ export const ja = {
     account: 'アカウント設定',
     accountSub: '表示名などのプロフィールを編集',
     notifications: 'お知らせ',
-    notificationsSub: 'クーポン期限や新着情報',
+    notificationsSub: '運営からのお知らせ',
     notificationPrivacy: '通知・プライバシー設定',
     notificationsOn: '{count}種類の通知がオン',
     notificationsOff: 'すべての通知がオフ',

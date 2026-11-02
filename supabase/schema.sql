@@ -1,4 +1,4 @@
--- DateSpot 基盤スキーマ（Supabase SQL Editor でそのまま実行可能）
+-- デートベース 基盤スキーマ（Supabase SQL Editor でそのまま実行可能）
 -- types/database.ts の Spot / Coupon / Favorite / Review / Plan / PlanSpot と対応させる。
 -- 再実行しても落ちないよう、CREATE TABLE IF NOT EXISTS と
 -- DROP POLICY IF EXISTS / ON CONFLICT DO NOTHING を使う。
@@ -164,15 +164,16 @@ create policy "reviews_insert_authenticated"
   on public.reviews
   for insert
   to authenticated
-  with check (true);
+  with check (auth.uid() = user_id);
 
 drop policy if exists "reviews_update_helpful" on public.reviews;
-create policy "reviews_update_helpful"
+drop policy if exists "reviews_update_own" on public.reviews;
+create policy "reviews_update_own"
   on public.reviews
   for update
-  to anon, authenticated
-  using (true)
-  with check (true);
+  to authenticated
+  using (auth.uid() = user_id)
+  with check (auth.uid() = user_id);
 
 drop policy if exists "notification_settings_own" on public.notification_settings;
 create policy "notification_settings_own"
@@ -187,14 +188,14 @@ create policy "account_deletions_insert_public"
   on public.account_deletions
   for insert
   to anon, authenticated
-  with check (true);
+  with check (user_id is null or auth.uid() = user_id);
 
 drop policy if exists "feedback_insert_public" on public.feedback;
 create policy "feedback_insert_public"
   on public.feedback
   for insert
   to anon, authenticated
-  with check (true);
+  with check (user_id is null or auth.uid() = user_id);
 
 drop policy if exists "plans_select_own_or_public" on public.plans;
 create policy "plans_select_own_or_public"

@@ -2,6 +2,7 @@ import { type ReactElement } from 'react';
 import { Modal, Pressable, ScrollView, StyleSheet, Text, View } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { Button } from '@/components';
+import { PUBLIC_SITE_ORIGIN } from '@/constants/publicSite';
 import type { Palette } from '@/theme';
 
 export type LegalDocument = 'terms' | 'privacy';
@@ -19,11 +20,11 @@ const LEGAL_COPY: Record<
 > = {
   terms: {
     title: '利用規約',
-    body: 'DateSpot-app はデートスポットの案内を目的としたアプリです。掲載情報は参考情報であり、営業時間や料金は各店舗の最新情報をご確認ください。本画面は開発中のダミー表示です。',
+    body: `デートベースはデートスポットの検索と保存のためのアプリです。掲載情報は参考情報で、席の予約は受け付けません。有料プランの決済も現在はありません。全文は ${PUBLIC_SITE_ORIGIN}/terms です。`,
   },
   privacy: {
     title: 'プライバシーポリシー',
-    body: 'お気に入りや利用履歴は、アプリ内の表示と同期のために利用します。この画面は開発確認用のダミーポリシーです。外部ブラウザは開きません。',
+    body: `位置情報、メールアドレス、お気に入り、プラン、口コミ、クーポン利用履歴を、アプリの機能のために扱います。個人情報の販売と広告追跡はしません。全文は ${PUBLIC_SITE_ORIGIN}/privacy です。`,
   },
 };
 

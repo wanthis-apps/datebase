@@ -68,7 +68,7 @@ export function NotificationsScreen(
               お知らせ
             </FittedHeading>
             <Text style={[styles.lead, { color: palette.textSecondary }]}>
-              {'クーポンの期限や、\nスポットの新着情報を\nまとめて確認できます。'}
+              {'運営からのお知らせが\nここに表示されます。'}
             </Text>
             <FilterChipRow
               value={filter}

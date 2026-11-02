@@ -4,7 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "アカウントの削除",
   description:
-    "DateSpot のアカウント削除手順です。アプリ内からの退会と、アプリを開けない場合のメール申請、削除するデータと残すデータを記載しています。",
+    "デートベース のアカウント削除手順です。アプリ内からの退会と、アプリを開けない場合のメール申請、削除するデータと残すデータを記載しています。",
 };
 
 const deletedItems = [
@@ -16,7 +16,7 @@ const deletedItems = [
 ] as const;
 
 const steps = [
-  "DateSpot を開き、プロフィールを表示します。",
+  "デートベース を開き、プロフィールを表示します。",
   "「アカウントを削除（退会）」を選びます。",
   "退会理由を選び、削除を確定します。",
 ] as const;
@@ -24,10 +24,10 @@ const steps = [
 export default function AccountDeletionPage() {
   return (
     <main className="mx-auto w-full min-w-0 max-w-3xl px-5 py-14">
-      <p className="break-keep text-sm tracking-[0.18em] text-rose">DateSpot</p>
+      <p className="break-keep text-sm tracking-[0.18em] text-rose">デートベース</p>
       <h1 className="break-keep mt-3 text-3xl leading-10 text-foreground">アカウントの削除</h1>
       <p className="break-keep mt-4 text-sm leading-7 text-ink-soft">
-        運営者は WANTHIS です。このページは DateSpot のアカウント削除手順です。ログインしていなくても閲覧できます。
+        運営者は WANTHIS です。このページは デートベース のアカウント削除手順です。ログインしていなくても閲覧できます。
       </p>
 
       <section className="mt-10 flex flex-col gap-4">

@@ -34,8 +34,11 @@ export function getMockCoupons(): Coupon[] {
 export async function fetchCoupons(): Promise<Coupon[]> {
   const client = getSupabaseClient();
   if (client === null) {
-    console.log('[DateSpot] coupons はモックから生成します');
-    return getMockCoupons();
+    if (__DEV__) {
+      console.log('[Datebase] coupons はモックから生成します');
+      return getMockCoupons();
+    }
+    return [];
   }
 
   const { data, error } = await client.from('coupons').select('*');

@@ -491,7 +491,7 @@ export function ProfileScreen({ navigation }: ProfileScreenProps): ReactElement 
           style={styles.versionWrap}
         >
           <Text style={[styles.versionLabel, { color: palette.muted }]}>
-            DateSpot  v{APP_VERSION}
+            デートベース  v{APP_VERSION}
           </Text>
           <Text style={[styles.versionHint, { color: palette.muted }]}>
             {__DEV__ ? '開発ビルド' : 'バージョン情報'}

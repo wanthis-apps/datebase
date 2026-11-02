@@ -1,4 +1,4 @@
-import { useMemo, useState, type ReactElement } from 'react';
+import { useMemo, type ReactElement } from 'react';
 import { CommonActions, useNavigation } from '@react-navigation/native';
 import { useAuth } from '@/features/auth';
 import {
@@ -30,12 +30,12 @@ import {
 } from '@/features/coupons/utils/uniqueCoupons';
 import { FavoriteButton } from '@/features/spots/components/FavoriteButton';
 import { useFavorites } from '@/features/spots/hooks/useFavorites';
+import { useCouponUsage } from '@/features/coupons/hooks/useCouponUsage';
 import { shareSpot } from '@/utils/share';
 import type { Palette } from '@/theme';
 import type { Coupon, Review, Spot } from '../../types/database';
 import { Button } from './Button';
 import { RemoteImage } from './RemoteImage';
-import { ReservationModal } from './ReservationModal';
 
 export type SpotDetailModalProps = {
   visible: boolean;
@@ -64,7 +64,7 @@ export function SpotDetailModal({
     helpfulReviewIds,
     toggleHelpful,
   } = useReviews(spot?.id ?? null);
-  const [reservationVisible, setReservationVisible] = useState(false);
+  const { redeem } = useCouponUsage();
 
   const relatedCoupons = useMemo(() => {
     if (spot === null) {
@@ -147,18 +147,18 @@ export function SpotDetailModal({
 
   const handleUseCoupon = (coupon: Coupon): void => {
     Alert.alert(
-      'クーポンを使用しますか？',
-      listedCouponSummary(coupon),
+      '利用済みとして記録しますか？',
+      `${listedCouponSummary(coupon)}\n\n店頭の割引が自動で適用されるわけではありません。`,
       [
         { text: 'キャンセル', style: 'cancel' },
         {
-          text: '使用する',
+          text: '記録する',
           onPress: () => {
-            console.log('[DateSpot] coupon use from modal (dummy)', coupon.id);
-            Alert.alert(
-              '利用を受け付けました',
-              'この操作は画面確認用のダミーアクションです。',
-            );
+            void redeem(coupon.id).then((result) => {
+              if (!result.ok) {
+                Alert.alert('記録できません', result.message);
+              }
+            });
           },
         },
       ],
@@ -166,7 +166,6 @@ export function SpotDetailModal({
   };
 
   const handleClose = (): void => {
-    setReservationVisible(false);
     onClose();
   };
 
@@ -273,11 +272,6 @@ export function SpotDetailModal({
 
               <View style={styles.actions}>
                 <Button
-                  label="予約・空席確認"
-                  onPress={() => setReservationVisible(true)}
-                  palette={palette}
-                />
-                <Button
                   label={favorited ? 'お気に入り解除' : 'お気に入り追加'}
                   onPress={handleToggleFavorite}
                   palette={palette}
@@ -334,7 +328,7 @@ export function SpotDetailModal({
                         {formatValidUntil(coupon.valid_until)}
                       </Text>
                       <Button
-                        label="クーポンを使用する"
+                        label="利用済みとして記録する"
                         onPress={() => handleUseCoupon(coupon)}
                         palette={palette}
                       />
@@ -400,12 +394,6 @@ export function SpotDetailModal({
         </View>
       </KeyboardAvoidingView>
     </Modal>
-    <ReservationModal
-      visible={reservationVisible}
-      spot={spot}
-      palette={palette}
-      onClose={() => setReservationVisible(false)}
-    />
     </>
   );
 }

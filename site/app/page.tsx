@@ -11,7 +11,7 @@ const points = [
   },
   {
     title: "クーポンを、その日のために",
-    body: "店舗のクーポンを確認し、利用した記録をアカウントに残せます。営業時間や料金は、各店舗の最新情報を確認してください。",
+    body: "提携クーポンがあるときは、利用した記録をアカウントに残せます。席の予約は受け付けていません。営業時間と料金は各施設の案内を確認してください。",
   },
 ] as const;
 
@@ -21,13 +21,13 @@ export default function HomePage() {
       <section className="mx-auto w-full min-w-0 max-w-5xl px-5 pt-16 pb-12 sm:pt-24">
         <p className="break-keep text-sm tracking-[0.22em] text-rose">WANTHIS</p>
         <h1 className="break-keep mt-4 max-w-3xl font-display text-5xl leading-tight text-foreground sm:text-6xl">
-          DateSpot
+          デートベース
         </h1>
         <p className="break-keep mt-6 max-w-2xl text-2xl leading-10 text-foreground">
           ふたりのための場所を、地図のうえで選ぶ。
         </p>
         <p className="break-keep mt-5 max-w-2xl text-base leading-8 text-ink-soft">
-          DateSpot は、WANTHIS の第1弾アプリです。近くのデートスポットを一覧と地図で探し、お気に入り、プラン、クーポンをアカウントに残せます。
+          デートベースは、WANTHIS の第1弾アプリです。近くのデートスポットを一覧と地図で探し、お気に入りとプランをアカウントに残せます。
         </p>
         <div className="mt-8 flex w-full min-w-0 flex-wrap gap-3">
           <Link
@@ -35,6 +35,12 @@ export default function HomePage() {
             className="break-keep inline-flex max-w-full items-center rounded-full border border-line bg-surface px-5 py-3 text-sm text-foreground"
           >
             プライバシーポリシー
+          </Link>
+          <Link
+            href="/terms"
+            className="break-keep inline-flex max-w-full items-center rounded-full border border-line bg-surface px-5 py-3 text-sm text-foreground"
+          >
+            利用規約
           </Link>
           <Link
             href="/support"

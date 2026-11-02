@@ -6,15 +6,15 @@ export const ROLE_LABELS: Record<UserRole, string> = {
 };
 
 export const PREMIUM_PLAN = {
-  name: 'プレミアムプラン',
-  priceLabel: '月額 ¥980',
-  headline: 'ドリンク1杯無料特典付き',
+  name: '有料プラン',
+  priceLabel: '未提供',
+  headline: '現在は無料',
   description:
-    '提携店舗で使えるドリンク1杯無料クーポンなど、\nデートをもっと特別にする特典を開放します。',
+    'デートベースは現在、無料で使えます。\n有料プランの決済はまだ開始していません。',
   benefits: [
-    '提携店舗でのドリンク1杯無料クーポン',
-    'クーポン利用履歴の確認',
-    '今後追加予定の予約・限定スポットへの優先案内',
+    'スポットの検索と地図',
+    'お気に入りとデートプラン',
+    '提携クーポンがあるときの利用記録',
   ],
 } as const;
 

@@ -1,7 +1,8 @@
 {
   "expo": {
     "name": "デートベース",
-    "slug": "DateSpot-app",
+    "slug": "datebase",
+    "scheme": "datebase",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -22,11 +23,6 @@
         "monochromeImage": "./assets/android-icon-monochrome.png"
       },
       "predictiveBackGestureEnabled": false,
-      "config": {
-        "googleMaps": {
-          "apiKey": "AIzaSyCXsEx-EP1t99Q3k-c6FUbKw0GeJXclbCg"
-        }
-      },
       "package": "com.wanthis.datebase",
       "versionCode": 1,
       "permissions": [
@@ -38,12 +34,7 @@
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
-      [
-        "react-native-maps",
-        {
-          "androidGoogleMapsApiKey": "AIzaSyCXsEx-EP1t99Q3k-c6FUbKw0GeJXclbCg"
-        }
-      ],
+      "react-native-maps",
       [
         "expo-location",
         {
@@ -65,7 +56,7 @@
     ],
     "extra": {
       "privacyPolicyUrl": "https://datespot.wanthis-apps.com/privacy",
-      "termsOfServiceUrl": "https://datespot.wanthis-apps.com/privacy",
+      "termsOfServiceUrl": "https://datespot.wanthis-apps.com/terms",
       "eas": {
         "projectId": "787781a1-0274-4da4-a8cd-db198d2c4c2f"
       }

@@ -37,12 +37,19 @@ function mapSpotRows(rows: unknown[]): Spot[] {
 export async function fetchSpotCatalog(): Promise<SpotCatalogResult> {
   const client = getSupabaseClient();
   if (client === null) {
-    const result: SpotCatalogResult = {
-      spots: getSpots(),
-      source: 'mock',
-      message: 'Supabase が未設定のためモックデータを表示しています。',
-      ok: true,
-    };
+    const result: SpotCatalogResult = __DEV__
+      ? {
+          spots: getSpots(),
+          source: 'mock',
+          message: 'Supabase が未設定のためモックデータを表示しています。',
+          ok: true,
+        }
+      : {
+          spots: [],
+          source: 'supabase',
+          message: '接続設定がないため、スポットを表示できません。',
+          ok: false,
+        };
     logSpotCatalogResult(result);
     return result;
   }

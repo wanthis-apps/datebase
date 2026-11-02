@@ -37,23 +37,26 @@ export function MyPageScreen({ navigation }: MyPageScreenProps): ReactElement {
     redeemingCouponId,
     openPlan,
     closePlan,
-    subscribe,
     redeemCoupon,
     reloadCoupons,
   } = useMyPageScreen();
 
   const handleUseCoupon = (couponId: string, description: string): void => {
-    Alert.alert('クーポンを利用しますか？', description, [
+    Alert.alert(
+      '利用済みとして記録しますか？',
+      `${description}\n\n店頭の割引が自動で適用されるわけではありません。`,
+      [
       { text: 'キャンセル', style: 'cancel' },
       {
-        text: '利用する',
+        text: '記録する',
         onPress: () => {
           void redeemCoupon(couponId).then((result) => {
             Alert.alert(result.ok ? '完了' : '利用できません', result.message);
           });
         },
       },
-    ]);
+    ],
+    );
   };
 
   const openSpotDetail = (spotId: string): void => {
@@ -183,7 +186,6 @@ export function MyPageScreen({ navigation }: MyPageScreenProps): ReactElement {
         isPremium={isPremium}
         palette={palette}
         onClose={closePlan}
-        onSubscribe={subscribe}
       />
     </View>
   );

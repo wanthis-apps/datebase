@@ -163,7 +163,7 @@ export function usePlans(): UsePlansResult {
       setRemoteSpots([]);
       setPlans((current) => [
         ...keepLocalPlans(current),
-        ...MOCK_PLANS,
+        ...(__DEV__ ? cloneMockPlans() : []),
       ]);
       setLoading(false);
       return;
@@ -192,7 +192,8 @@ export function usePlans(): UsePlansResult {
 
       const { data, error: queryError } = await query;
       if (queryError !== null) {
-        setPlans((current) => [...keepLocalPlans(current), ...MOCK_PLANS]);
+        setPlans((current) => keepLocalPlans(current));
+        setError(queryError.message);
         return;
       }
 
@@ -208,14 +209,12 @@ export function usePlans(): UsePlansResult {
               (plan) => plan.user_id === userId || plan.is_public,
             );
 
-      setPlans((current) => {
-        const localOnly = keepLocalPlans(current);
-        return ownOrPublic.length > 0
-          ? [...localOnly, ...ownOrPublic]
-          : [...localOnly, ...MOCK_PLANS];
-      });
+      setPlans((current) => [
+        ...keepLocalPlans(current),
+        ...ownOrPublic,
+      ]);
     } catch (caught) {
-      setPlans((current) => [...keepLocalPlans(current), ...MOCK_PLANS]);
+      setPlans((current) => keepLocalPlans(current));
       setError(toErrorMessage(caught));
     } finally {
       setLoading(false);

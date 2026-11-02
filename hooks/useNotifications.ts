@@ -79,7 +79,7 @@ function cloneMockNotifications(): Notification[] {
 }
 
 export const useNotificationStore = create<NotificationState>((set) => ({
-  items: cloneMockNotifications(),
+  items: [],
   filter: 'all',
   setFilter: (filter) => set({ filter }),
   markAsRead: (id) =>

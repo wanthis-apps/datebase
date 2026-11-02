@@ -51,11 +51,11 @@ export function StartupDiagnosticScreen() {
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={styles.content}>
-        <Text style={styles.kicker}>DateSpot debug</Text>
+        <Text style={styles.kicker}>デートベース debug</Text>
         <Text style={styles.title}>起動診断</Text>
         <Text style={styles.lead}>
           「Something went wrong.」の代わりに、ここで原因を確認できます。Metro
-          ターミナルにも同じ内容を [DateSpot] で出力します。
+          ターミナルにも同じ内容を [Datebase] で出力します。
         </Text>
 
         <View style={styles.card}>

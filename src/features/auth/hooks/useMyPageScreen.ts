@@ -2,7 +2,6 @@ import { useMemo, useState } from 'react';
 import { useCoupons, useCouponUsage } from '@/features/coupons';
 import { useAppTheme } from '@/context';
 import { useFavorites, useSpotCatalogStore } from '@/features/spots';
-import { PREMIUM_PLAN } from '@/features/subscription/constants';
 import { useMembershipStore } from '@/features/subscription/store/membershipStore';
 import type { Palette } from '@/theme';
 import type { Coupon, Spot, TimeOfDay, UserCouponHistory, UserRole } from '@/types';
@@ -39,14 +38,12 @@ export type MyPageViewModel = {
   redeemingCouponId: string | null;
   openPlan: () => void;
   closePlan: () => void;
-  subscribe: () => void;
   redeemCoupon: (couponId: string) => Promise<{ ok: boolean; message: string }>;
   reloadCoupons: () => Promise<void>;
 };
 
 export function useMyPageScreen(): MyPageViewModel {
   const role = useMembershipStore((state) => state.role);
-  const setRole = useMembershipStore((state) => state.setRole);
   const { isDark, palette } = useAppTheme();
   const spots = useSpotCatalogStore((state) => state.spots);
   const { favoriteSpotIds } = useFavorites();
@@ -117,9 +114,7 @@ export function useMyPageScreen(): MyPageViewModel {
     isDark,
     timeOfDay: isDark ? 'night' : 'day',
     palette,
-    ctaLabel: isPremium
-      ? '特典・プラン内容を見る'
-      : `プレミアムプラン（${PREMIUM_PLAN.headline}）に登録する`,
+    ctaLabel: 'プランについて',
     favoriteSpots,
     usedHistory,
     availableCoupons,
@@ -129,10 +124,6 @@ export function useMyPageScreen(): MyPageViewModel {
     redeemingCouponId,
     openPlan: () => setIsPlanVisible(true),
     closePlan: () => setIsPlanVisible(false),
-    subscribe: () => {
-      setRole('premium');
-      setIsPlanVisible(false);
-    },
     redeemCoupon: redeem,
     reloadCoupons: async () => {
       await Promise.all([reload(), reloadUsage()]);

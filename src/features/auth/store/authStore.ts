@@ -5,6 +5,7 @@ import { getSupabaseClient } from '@/services/supabase';
 import { useSpotFilterStore } from '@/features/spots/store/spotFilterStore';
 import type { DeleteAccountReason } from '../../../../types/database';
 import { useFavoriteStore } from '@/features/spots/store/favoriteStore';
+import { SUPPORT_URL } from '@/constants/publicSite';
 import { ensureAnonymousSession, ensureAppUser } from '../api/session';
 
 const GUEST_MODE_KEY = '@datespot/guest-mode';
@@ -28,6 +29,7 @@ type AuthState = {
   continueAsGuest: () => Promise<AuthActionResult>;
   signIn: (email: string, password: string) => Promise<AuthActionResult>;
   signUp: (email: string, password: string) => Promise<AuthActionResult>;
+  requestPasswordReset: (email: string) => Promise<AuthActionResult>;
   signOut: () => Promise<void>;
   deleteAccount: (reason: DeleteAccountReason) => Promise<AuthActionResult>;
   setMockAuth: (mode: MockAuthMode) => Promise<void>;
@@ -63,7 +65,7 @@ function createMockDevUser(): User {
     id: '00000000-0000-4000-8000-000000000099',
     aud: 'authenticated',
     role: 'authenticated',
-    email: 'dev@datespot.app',
+    email: 'dev@datebase.local',
     email_confirmed_at: now,
     phone: '',
     confirmed_at: now,
@@ -239,6 +241,27 @@ export const useAuthStore = create<AuthState>((set, get) => ({
     });
     return { ok: true, message: 'ログインしました。' };
   },
+  requestPasswordReset: async (email) => {
+    const client = getSupabaseClient();
+    if (client === null) {
+      return {
+        ok: false,
+        message: '接続設定がないため、再設定メールを送れません。',
+      };
+    }
+
+    const { error } = await client.auth.resetPasswordForEmail(email.trim(), {
+      redirectTo: SUPPORT_URL,
+    });
+    if (error !== null) {
+      return { ok: false, message: error.message };
+    }
+
+    return {
+      ok: true,
+      message: '再設定メールを送りました。届いたリンクからパスワードを変更してください。',
+    };
+  },
   signUp: async (email, password) => {
     const client = getSupabaseClient();
     if (client === null) {
@@ -298,28 +321,31 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       )
         ? userId
         : null;
+    let deletedOnServer = false;
+    let recordedRequest = false;
 
-    if (client !== null) {
-      try {
-        await client.from('account_deletions').insert({
+    if (client !== null && remoteUserId !== null) {
+      const { error: rpcError } = await client.rpc('delete_own_account', {
+        deletion_reason: reason,
+      });
+      deletedOnServer = rpcError === null;
+      if (rpcError !== null) {
+        console.warn('[Datebase] アカウント削除関数の呼び出しに失敗', rpcError.message);
+        const { error: insertError } = await client.from('account_deletions').insert({
           user_id: remoteUserId,
           reason,
         });
-      } catch (error) {
-        console.warn('[DateSpot] 退会理由の保存に失敗', error);
-      }
-
-      if (remoteUserId !== null) {
-        try {
-          await client.from('users').delete().eq('id', remoteUserId);
-        } catch (error) {
-          console.warn('[DateSpot] ユーザー行の削除に失敗', error);
+        recordedRequest = insertError === null;
+        if (insertError !== null) {
+          console.warn('[Datebase] 退会理由の保存に失敗', insertError.message);
         }
       }
+    }
 
+    if (client !== null) {
       const { error: signOutError } = await client.auth.signOut();
       if (signOutError !== null) {
-        console.warn('[DateSpot] 退会後のサインアウトに失敗', signOutError.message);
+        console.warn('[Datebase] 退会後のサインアウトに失敗', signOutError.message);
       }
     }
 
@@ -333,12 +359,25 @@ export const useAuthStore = create<AuthState>((set, get) => ({
       error: null,
     });
 
+    if (client === null || remoteUserId === null) {
+      return {
+        ok: true,
+        message: 'この端末のセッションを終了し、ログイン画面に戻ります。',
+      };
+    }
+
+    if (deletedOnServer) {
+      return {
+        ok: true,
+        message: 'アカウントと個人データを削除し、セッションを終了しました。',
+      };
+    }
+
     return {
-      ok: true,
-      message:
-        client === null
-          ? 'この端末のセッションを終了し、ログイン画面に戻ります。'
-          : 'アカウントを削除し、セッションを終了しました。',
+      ok: recordedRequest,
+      message: recordedRequest
+        ? '退会申請を受け付けました。サーバー側の削除処理を適用したあと、30日以内にアカウントを削除します。'
+        : '退会申請を保存できませんでした。support@wanthis-apps.com へ連絡してください。',
     };
   },
   setMockAuth: async (mode) => {

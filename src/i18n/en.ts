@@ -42,9 +42,9 @@ export const en: TranslationDict = {
     slide1Title: 'Find the right date spot',
     slide1Body:
       'Search with the map and filters\nto discover cafes, night views,\nand places that fit the two of you.',
-    slide2Title: 'Go out with exclusive coupons',
+    slide2Title: 'Record a partner coupon when one exists',
     slide2Body:
-      'Use limited offers at partner spots\nto make the date feel a little more special.',
+      'When a partner lists a coupon,\nyou can save a record that you used it.',
     slide3Title: 'Create a date plan of your own',
     slide3Body:
       'Combine favorite spots into a course\nand save it just for the two of you.',
@@ -68,7 +68,7 @@ export const en: TranslationDict = {
     account: 'Account',
     accountSub: 'Edit your display name and profile',
     notifications: 'Notifications',
-    notificationsSub: 'Coupon deadlines and news',
+    notificationsSub: 'Notices from the operator',
     notificationPrivacy: 'Notification & privacy settings',
     notificationsOn: '{count} notification types on',
     notificationsOff: 'All notifications are off',

@@ -17,6 +17,7 @@ export type UseAuthResult = {
   continueAsGuest: () => Promise<AuthActionResult>;
   signIn: (email: string, password: string) => Promise<AuthActionResult>;
   signUp: (email: string, password: string) => Promise<AuthActionResult>;
+  requestPasswordReset: (email: string) => Promise<AuthActionResult>;
   signOut: () => Promise<void>;
   deleteAccount: (reason: DeleteAccountReason) => Promise<AuthActionResult>;
 };
@@ -35,6 +36,7 @@ export function useAuth(): UseAuthResult {
   const continueAsGuest = useAuthStore((state) => state.continueAsGuest);
   const signIn = useAuthStore((state) => state.signIn);
   const signUp = useAuthStore((state) => state.signUp);
+  const requestPasswordReset = useAuthStore((state) => state.requestPasswordReset);
   const signOut = useAuthStore((state) => state.signOut);
   const deleteAccount = useAuthStore((state) => state.deleteAccount);
 
@@ -65,6 +67,7 @@ export function useAuth(): UseAuthResult {
     continueAsGuest,
     signIn,
     signUp,
+    requestPasswordReset,
     signOut,
     deleteAccount,
   };

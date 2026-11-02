@@ -26,8 +26,6 @@ export { TagFilterModal } from './TagFilterModal';
 export type { TagFilterModalProps } from './TagFilterModal';
 export { LoadingState } from './LoadingState';
 export { RemoteImage, isUsableImageUri } from './RemoteImage';
-export { ReservationModal } from './ReservationModal';
-export type { ReservationModalProps } from './ReservationModal';
 export { SearchBar } from './SearchBar';
 export type { SearchBarProps } from './SearchBar';
 export { ScreenPlaceholder } from './ScreenPlaceholder';

@@ -5,6 +5,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { CouponCardSkeleton, ErrorState, FittedHeading } from '@/components';
 import { useAppTheme } from '@/context';
 import { listedCouponSummary } from '@/features/coupons/utils/uniqueCoupons';
+import { useCouponUsage } from '@/features/coupons/hooks/useCouponUsage';
 import { useCouponList } from '../../hooks/useCouponList';
 import type { TabScreenProps } from '@/navigation/types';
 import type { Coupon } from '../../types/database';
@@ -17,6 +18,7 @@ export function CouponsScreen({ navigation }: CouponsScreenProps): ReactElement 
   const insets = useSafeAreaInsets();
   const { isDark, palette } = useAppTheme();
   const { coupons, loading, error, refetch } = useCouponList();
+  const { redeem } = useCouponUsage();
 
   const handleOpenSpot = (coupon: Coupon): void => {
     const spotId = coupon.spot_id.trim();
@@ -29,22 +31,18 @@ export function CouponsScreen({ navigation }: CouponsScreenProps): ReactElement 
 
   const handleUseCoupon = (coupon: Coupon): void => {
     Alert.alert(
-      'クーポンを使用しますか？',
-      listedCouponSummary(coupon),
+      '利用済みとして記録しますか？',
+      `${listedCouponSummary(coupon)}\n\n店頭の割引が自動で適用されるわけではありません。`,
       [
         { text: 'キャンセル', style: 'cancel' },
         {
-          text: '使用する',
+          text: '記録する',
           onPress: () => {
-            console.log('[DateSpot] coupon use (dummy)', {
-              id: coupon.id,
-              title: coupon.title,
-              spot: coupon.spot?.name ?? coupon.spot_id,
+            void redeem(coupon.id).then((result) => {
+              if (!result.ok) {
+                Alert.alert('記録できません', result.message);
+              }
             });
-            Alert.alert(
-              '利用を受け付けました',
-              'この操作は画面確認用のダミーアクションです。',
-            );
           },
         },
       ],

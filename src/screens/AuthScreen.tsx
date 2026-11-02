@@ -16,7 +16,7 @@ import { useAppTheme } from '@/context';
 import { useAuth } from '@/features/auth';
 import type { RootStackScreenProps } from '@/navigation/types';
 
-type AuthMode = 'login' | 'signup';
+type AuthMode = 'login' | 'signup' | 'reset';
 
 type AuthScreenProps = Partial<RootStackScreenProps<'Auth'>>;
 
@@ -43,11 +43,12 @@ function validateAuthForm(email: string, password: string): string | null {
 export function AuthScreen({ navigation }: AuthScreenProps): ReactElement {
   const insets = useSafeAreaInsets();
   const { isDark, palette } = useAppTheme();
-  const { signIn, signUp, continueAsGuest } = useAuth();
+  const { signIn, signUp, continueAsGuest, requestPasswordReset } = useAuth();
   const [mode, setMode] = useState<AuthMode>('login');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
+  const [notice, setNotice] = useState<string | null>(null);
   const [submitting, setSubmitting] = useState(false);
 
   const enterMain = (): void => {
@@ -67,6 +68,31 @@ export function AuthScreen({ navigation }: AuthScreenProps): ReactElement {
   };
 
   const handleSubmit = (): void => {
+    if (mode === 'reset') {
+      const trimmedEmail = email.trim();
+      if (!EMAIL_PATTERN.test(trimmedEmail)) {
+        setError('メールアドレスの形式が正しくありません。');
+        return;
+      }
+
+      setSubmitting(true);
+      setError(null);
+      void requestPasswordReset(trimmedEmail)
+        .then((result) => {
+          if (!result.ok) {
+            setError(result.message);
+            return;
+          }
+          setNotice(result.message);
+          setMode('login');
+          setPassword('');
+        })
+        .finally(() => {
+          setSubmitting(false);
+        });
+      return;
+    }
+
     const validationError = validateAuthForm(email, password);
     if (validationError !== null) {
       setError(validationError);
@@ -137,11 +163,11 @@ export function AuthScreen({ navigation }: AuthScreenProps): ReactElement {
               style={[styles.logo, { backgroundColor: palette.primaryMuted }]}
             >
               <Text style={[styles.logoMark, { color: palette.primary }]}>
-                DS
+                DB
               </Text>
             </View>
             <Text style={[styles.kicker, { color: palette.primary }]}>
-              DateSpot
+              デートベース
             </Text>
             <FittedHeading style={[styles.heading, { color: palette.text }]}>
               {mode === 'login' ? 'ログイン' : '新規アカウント作成'}
@@ -227,24 +253,46 @@ export function AuthScreen({ navigation }: AuthScreenProps): ReactElement {
                 },
               ]}
             />
-            <Text style={[styles.label, { color: palette.textSecondary }]}>
-              パスワード
-            </Text>
-            <TextInput
-              value={password}
-              onChangeText={setPassword}
-              secureTextEntry
-              placeholder={`${MIN_PASSWORD_LENGTH}文字以上`}
-              placeholderTextColor={palette.muted}
-              style={[
-                styles.input,
-                {
-                  color: palette.text,
-                  backgroundColor: palette.surface,
-                  borderColor: palette.border,
-                },
-              ]}
-            />
+            {mode === 'reset' ? null : (
+              <>
+                <Text style={[styles.label, { color: palette.textSecondary }]}>
+                  パスワード
+                </Text>
+                <TextInput
+                  value={password}
+                  onChangeText={setPassword}
+                  secureTextEntry
+                  placeholder={`${MIN_PASSWORD_LENGTH}文字以上`}
+                  placeholderTextColor={palette.muted}
+                  style={[
+                    styles.input,
+                    {
+                      color: palette.text,
+                      backgroundColor: palette.surface,
+                      borderColor: palette.border,
+                    },
+                  ]}
+                />
+              </>
+            )}
+            {mode === 'login' ? (
+              <Pressable
+                accessibilityRole="button"
+                onPress={() => {
+                  setMode('reset');
+                  setError(null);
+                }}
+              >
+                <Text style={[styles.forgot, { color: palette.primary }]}>
+                  パスワードを忘れた場合
+                </Text>
+              </Pressable>
+            ) : null}
+            {notice !== null ? (
+              <Text style={[styles.forgot, { color: palette.textSecondary }]}>
+                {notice}
+              </Text>
+            ) : null}
             {error !== null ? (
               <View
                 style={[
@@ -263,7 +311,9 @@ export function AuthScreen({ navigation }: AuthScreenProps): ReactElement {
                   ? '処理中…'
                   : mode === 'login'
                     ? 'ログイン'
-                    : 'アカウントを作成'
+                    : mode === 'reset'
+                      ? '再設定メールを送る'
+                      : 'アカウントを作成'
               }
               palette={palette}
               disabled={submitting}
@@ -337,6 +387,11 @@ const styles = StyleSheet.create({
     borderRadius: 999,
     paddingVertical: 10,
     alignItems: 'center',
+  },
+  forgot: {
+    fontSize: 13,
+    fontWeight: '600',
+    lineHeight: 20,
   },
   tabLabel: {
     fontSize: 14,

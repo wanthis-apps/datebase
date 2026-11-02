@@ -4,7 +4,7 @@ import Link from "next/link";
 export const metadata: Metadata = {
   title: "プライバシーポリシー",
   description:
-    "DateSpot における位置情報、端末情報、お気に入りの取り扱い、Supabase での認証と保存、第三者提供の有無、お問い合わせ先です。",
+    "デートベース における位置情報、端末情報、お気に入りの取り扱い、Supabase での認証と保存、第三者提供の有無、お問い合わせ先です。",
 };
 
 const dataItems = [
@@ -28,16 +28,16 @@ const dataItems = [
 export default function PrivacyPage() {
   return (
     <main className="mx-auto w-full min-w-0 max-w-3xl px-5 py-14">
-      <p className="break-keep text-sm tracking-[0.18em] text-rose">DateSpot</p>
+      <p className="break-keep text-sm tracking-[0.18em] text-rose">デートベース</p>
       <h1 className="break-keep mt-3 text-3xl leading-10 text-foreground">プライバシーポリシー</h1>
       <p className="break-keep mt-4 text-sm leading-7 text-ink-soft">
-        制定日 2026年10月3日。運営者は WANTHIS です。本方針は DateSpot に適用します。
+        制定日 2026年10月3日。運営者は WANTHIS です。本方針は デートベース に適用します。
       </p>
 
       <section className="mt-10 flex flex-col gap-4">
         <h2 className="break-keep text-xl leading-8">取得するユーザーデータ</h2>
         <p className="break-keep text-base leading-8 text-ink-soft">
-          DateSpot が扱う主なデータは、位置情報、端末内に残す情報、お気に入りです。個人情報の販売、および広告のためのアプリ横断トラッキングは行いません。
+          デートベース が扱う主なデータは、位置情報、端末内に残す情報、お気に入りです。個人情報の販売、および広告のためのアプリ横断トラッキングは行いません。
         </p>
         <ul className="flex flex-col gap-4">
           {dataItems.map((item) => (

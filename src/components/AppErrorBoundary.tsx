@@ -38,7 +38,7 @@ export class AppErrorBoundary extends Component<Props, State> {
     return (
       <View style={styles.container}>
         <ScrollView contentContainerStyle={styles.content}>
-          <Text style={styles.kicker}>DateSpot debug</Text>
+          <Text style={styles.kicker}>デートベース</Text>
           <Text style={styles.title}>起動エラーを捕捉しました</Text>
           <Text style={styles.errorText} selectable>
             {error.message}

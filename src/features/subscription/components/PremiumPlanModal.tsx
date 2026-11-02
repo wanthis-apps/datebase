@@ -10,7 +10,6 @@ type PremiumPlanModalProps = {
   isPremium: boolean;
   palette: Palette;
   onClose: () => void;
-  onSubscribe: () => void;
 };
 
 export function PremiumPlanModal({
@@ -18,7 +17,6 @@ export function PremiumPlanModal({
   isPremium,
   palette,
   onClose,
-  onSubscribe,
 }: PremiumPlanModalProps): ReactElement {
   return (
     <Modal
@@ -61,30 +59,16 @@ export function PremiumPlanModal({
               </View>
             ))}
           </View>
-          {isPremium ? (
-            <Button
-              label="とじる"
-              onPress={onClose}
-              palette={palette}
-              variant="ghost"
-            />
-          ) : (
-            <View style={styles.actions}>
-              <Button
-                label="このプランに登録する"
-                onPress={onSubscribe}
-                palette={palette}
-              />
-              <Button
-                label="あとで"
-                onPress={onClose}
-                palette={palette}
-                variant="ghost"
-              />
-            </View>
-          )}
+          <Button
+            label="とじる"
+            onPress={onClose}
+            palette={palette}
+            variant="ghost"
+          />
           <Text style={[styles.footnote, { color: palette.muted }]}>
-            決済は次フェーズの RevenueCat 連携で有効化します。
+            {isPremium
+              ? 'この表示は決済済みを意味しません。'
+              : '購入ボタンはありません。決済の開始後に案内します。'}
           </Text>
         </Pressable>
       </Pressable>

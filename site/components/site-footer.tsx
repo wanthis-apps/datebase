@@ -3,6 +3,7 @@ import Link from "next/link";
 const links = [
   { href: "/", label: "トップ" },
   { href: "/privacy", label: "プライバシーポリシー" },
+  { href: "/terms", label: "利用規約" },
   { href: "/account-deletion", label: "アカウント削除" },
   { href: "/support", label: "サポート" },
 ] as const;
@@ -14,7 +15,7 @@ export function SiteFooter() {
         <div className="flex flex-col gap-2">
           <p className="break-keep font-display text-lg tracking-[0.16em]">WANTHIS</p>
           <p className="break-keep text-sm leading-7 text-ink-soft">
-            第1弾アプリ DateSpot のサポートとプライバシーポリシーを掲載しています。
+            第1弾アプリ デートベース のサポートとプライバシーポリシーを掲載しています。
           </p>
         </div>
         <div className="flex flex-col gap-3">

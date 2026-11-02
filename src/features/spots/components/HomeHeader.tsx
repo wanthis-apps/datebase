@@ -61,7 +61,7 @@ export function HomeHeader({
   return (
     <View style={[styles.container, { backgroundColor: palette.background }]}>
       <View style={styles.topRow}>
-        <Text style={[styles.kicker, { color: palette.primary }]}>DateSpot</Text>
+        <Text style={[styles.kicker, { color: palette.primary }]}>デートベース</Text>
         {onPressNotifications !== undefined ? (
           <Pressable
             accessibilityRole="button"
@@ -84,9 +84,11 @@ export function HomeHeader({
         {heading}
       </FittedHeading>
       <AreaHeader palette={palette} />
-      <Text style={[styles.source, { color: palette.textSecondary }]}>
-        データソース: {sourceLabel}
-      </Text>
+      {__DEV__ ? (
+        <Text style={[styles.source, { color: palette.textSecondary }]}>
+          データソース: {sourceLabel}
+        </Text>
+      ) : null}
       {searchBar}
       <Pressable
         accessibilityRole="button"
