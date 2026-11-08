@@ -128,8 +128,8 @@ SQL の役割:
 コードで終わっていない。人が各サービスの画面で行う。
 
 1. ~~GitHub リポジトリを `datebase` に改名する~~ 済み（2026-11-08）。Vercel のプロジェクト（`datespot-lp` / `datespot-site`）が新しいリポジトリ名で連携できているかは未確認。
-2. Supabase SQL Editor で `supabase/migrations/20261102140000_delete_own_account.sql` を実行する。
-3. Google Cloud で Maps の API キーを制限し、同じ値を EAS の環境変数 `GOOGLE_MAPS_API_KEY` に登録する。キーは `app.json` から外してある。
+2. Supabase SQL Editor で `supabase/migrations/20261102140000_delete_own_account.sql` を実行する。`account_deletions` テーブルと insert ポリシーも同じファイルで作るので、このファイルだけで足りる。再実行してよい。
+3. Google Cloud で Maps の API キーを作り直して制限し、新しい値を EAS の環境変数 `GOOGLE_MAPS_API_KEY`（production）に登録する。古いキー（`AIzaSyCX` で始まる）はコミット `2c10c20` の `app.json` に入ったまま GitHub に push 済みなので、制限だけで済ませず無効にする。ローカルの `android/`（Git 管理外の prebuild 出力）の `AndroidManifest.xml` にも古いキーが残っている。EAS の production ビルドはキーが空だと `app.config.ts` で止まる。
 4. Vercel で `https://datespot.wanthis-apps.com` の配信を確認する。必要なら `datebase.wanthis-apps.com` を足す。足すまではコードの URL を変えない。
 5. Play Console の本人確認後、アプリ名「デートベース」で枠を作り、`docs/store-metadata.md` に沿って提出する。
 6. 審査用アカウント `reviewer@wanthis-apps.com` を Supabase Auth に作る。パスワードはリポジトリに書かない。パスワード管理と Play Console の審査メモにだけ置く。

@@ -5,6 +5,7 @@ import { getSupabaseClient } from '@/services/supabase';
 import { useSpotFilterStore } from '@/features/spots/store/spotFilterStore';
 import type { DeleteAccountReason } from '../../../../types/database';
 import { useFavoriteStore } from '@/features/spots/store/favoriteStore';
+import { useRecentlyViewedStore } from '../../../../hooks/useRecentlyViewed';
 import { SUPPORT_URL } from '@/constants/publicSite';
 import { ensureAnonymousSession, ensureAppUser } from '../api/session';
 
@@ -351,6 +352,8 @@ export const useAuthStore = create<AuthState>((set, get) => ({
 
     await writeGuestMode(false);
     await useFavoriteStore.getState().clearLocal();
+    // 削除ページと退会画面で「閲覧履歴も消す」と案内しているので、端末の履歴も消す
+    useRecentlyViewedStore.getState().replaceIds([]);
     set({
       user: null,
       session: null,

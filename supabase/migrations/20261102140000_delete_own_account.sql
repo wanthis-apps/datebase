@@ -1,5 +1,26 @@
 -- ログイン中の本人だけが、自分の認証アカウントと個人データを削除する。
 -- Supabase の SQL Editor で実行する。アプリの退会は public.delete_own_account を呼ぶ。
+-- 何度実行しても同じ結果になる。
+
+-- 退会の受付記録。本番に無いと関数の呼び出しが失敗するので、ここで用意する。
+-- 列は supabase/schema.sql と src/types/database.ts に合わせている。
+-- auth.users への外部キーは付けない（認証アカウントを消したあとも記録を残すため）。
+create table if not exists public.account_deletions (
+  id uuid primary key default gen_random_uuid(),
+  user_id uuid,
+  reason text not null,
+  created_at timestamptz not null default timezone('utc', now())
+);
+
+alter table public.account_deletions enable row level security;
+
+-- 関数が失敗したときに、アプリが退会理由だけを保存するためのポリシー。読み取りは許可しない。
+drop policy if exists "account_deletions_insert_public" on public.account_deletions;
+create policy "account_deletions_insert_public"
+  on public.account_deletions
+  for insert
+  to anon, authenticated
+  with check (user_id is null or auth.uid() = user_id);
 
 create or replace function public.delete_own_account(deletion_reason text)
 returns void
