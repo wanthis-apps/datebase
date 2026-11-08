@@ -33,10 +33,10 @@ Claude Code はこのファイルを最初に読む。チャット履歴は残�
 | iOS bundle / Android package | `com.wanthis.datebase` |
 | EAS projectId | `787781a1-0274-4da4-a8cd-db198d2c4c2f`（変えない） |
 | 公開サイト | `https://datespot.wanthis-apps.com` |
-| Git リモート | `https://github.com/wanthis-apps/datespot-lp.git` |
-| ローカルフォルダ | `C:\Users\deskt\cursor\デートベース` |
+| Git リモート | `https://github.com/wanthis-apps/datebase.git`（2026-11-08 に `datespot-lp` から改名） |
+| ローカルフォルダ | `C:\Users\deskt\claude_work\デートベース` |
 
-`datespot` が残っているのは、GitHub リポジトリ名と公開サイトのホスト名だけ。アプリ名を DateSpot に戻さない。ログの `[DateSpot]` は古い接頭辞で、表示名ではない。
+`datespot` が残っているのは、公開サイトのホスト名と Vercel のプロジェクト名だけ。アプリ名を DateSpot に戻さない。ログの `[DateSpot]` は古い接頭辞で、表示名ではない。
 
 公開サイトのホストを `datebase.wanthis-apps.com` に変える作業は未了。DNS と Vercel が変わるまで、コード上の正規 URL は `src/constants/publicSite.ts` の `datespot.wanthis-apps.com` のままにする。
 
@@ -127,7 +127,7 @@ SQL の役割:
 
 コードで終わっていない。人が各サービスの画面で行う。
 
-1. GitHub リポジトリ `wanthis-apps/datespot-lp` を `datebase` に改名する。ローカルフォルダは既に `デートベース`。`DateSpot-app` というフォルダ名にはなっていない。
+1. ~~GitHub リポジトリを `datebase` に改名する~~ 済み（2026-11-08）。Vercel のプロジェクト（`datespot-lp` / `datespot-site`）が新しいリポジトリ名で連携できているかは未確認。
 2. Supabase SQL Editor で `supabase/migrations/20261102140000_delete_own_account.sql` を実行する。
 3. Google Cloud で Maps の API キーを制限し、同じ値を EAS の環境変数 `GOOGLE_MAPS_API_KEY` に登録する。キーは `app.json` から外してある。
 4. Vercel で `https://datespot.wanthis-apps.com` の配信を確認する。必要なら `datebase.wanthis-apps.com` を足す。足すまではコードの URL を変えない。
