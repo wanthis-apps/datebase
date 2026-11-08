@@ -1,14 +1,10 @@
-# DateSpot-app Cursor Rules
-## プロジェクト概要
-- アプリ名: DateSpot-app (デートスポット案内アプリ)
-- 技術スタック: React Native (Expo SDK), TypeScript, Supabase
+# デートベース
 
-## 開発環境と制約（重要）
-- **現在は実機・シミュレータでの動作確認を行わない環境です。**
-- ネイティブ機能（`react-native-maps` など）に直接依存するテストは行わず、型定義、ロジック、データベース連携、純粋なUIコンポーネントの構築を優先してください。
-- エラーを防ぐため、TypeScriptの型定義を厳密（Strict）に行ってください。
+前提と未了作業の正本は `CLAUDE.md`。このファイルと矛盾したら `CLAUDE.md` を優先する。
 
-## コードスタイルと設計原則
-- 関数コンポーネントとReact Hooksを使用すること。
-- データ構造の型は `types/database.ts` で一括管理すること。
-- データ取得やフィルタリングなどのビジネスロジックはカスタムフック（`hooks/`）へ切り分けること。
+- アプリ名: デートベース（Expo slug は `datebase`）
+- 技術: React Native（Expo SDK 57）、TypeScript strict、Supabase
+- 関数コンポーネントと React Hooks
+- アプリが読む DB 型は `src/types/database.ts`。ルートの `types/database.ts` は古い
+- データ取得とフィルタは `src/features/*/hooks` またはルートの `hooks/` へ置く
+- 実機・シミュレータはこの環境の日常確認にしない。確認は `npx tsc --noEmit` を基本にする
